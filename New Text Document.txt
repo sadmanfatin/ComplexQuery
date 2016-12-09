@@ -4,7 +4,6 @@ select * from OE_ORDER_HEADERS_ALL  where header_id='2009' ; --Standard header  
  
 select * from CUST_MNJ_ONT_SO_OBIN_SIZLINE where sales_order_id='2009'; -- Custom header delivery date
  
-select  sum(so_obinsline_id)  from CUST_MNJ_ONT_SO_OBINSLINE where  so_obinsline_id=4;--so_obinsline_h_id=2009;
 
 
 
