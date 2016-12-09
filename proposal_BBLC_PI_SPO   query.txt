@@ -1,0 +1,180 @@
+
+
+===============================================================================2.12.16=======================================================================
+
+
+SELECT DISTINCT PIV.*, ASUP.VENDOR_NAME, PL.SUPPLIER_ID, PL.ORG_ID, HRU.INTERNAL_ADDRESS_LINE, PD.PO_NO AS SPO_NO, PD.ATTRIBUTE1 AS USANCE,
+       PD.ATTRIBUTE2 AS SHIP_MODE, PD.ATTRIBUTE3 AS BUYER_NAME, PD.ATTRIBUTE4 AS SEASON, PD.ATTRIBUTE5 AS STYLE_NAME ,
+       PD.ATTRIBUTE6 AS STYLE_NO,
+       
+       details.INVOICE_NO,
+       details.SHIPMENT_NUMBER ,
+       details.BILL_ENTRY_NO,
+       details.BILL_ENTRY_DATE,
+       details.BILL_SUBMIT_BANK_DATE,
+       details_ai.BILL_REFERENCE_NO,
+       details_ai.BILL_VALUE,
+       details_ai.MATURITY_DATE  
+    FROM IEDOC_IMP_PI_LINES PL,
+       IEDOC_IMP_PI_DETAILS PD,
+       PI_BBLC_V PIV,
+       AP_SUPPLIERS ASUP,
+        IEDOC_IMP_BBLC_LINES lines,
+       IEDOC_IMP_BBLC_DETAILS details,
+       IEDOC_IMP_BBLC_SUB_DET_AI details_ai,
+       HR_ORGANIZATION_UNITS HRU
+    WHERE PL.IMP_PI_LINE_ID = PD.IMP_PI_LINE_ID
+       AND PIV.PI_NO = PL.PI_NO
+       AND ASUP.VENDOR_ID = PL.SUPPLIER_ID
+       AND lines.IMP_BBLC_LINE_ID = details.IMP_BBLC_LINE_ID
+       AND PIV.BBLC_NO= lines.BBLC_NO(+)  
+       AND details.IMP_BBLC_DETAIL_ID = details_ai.IMP_BBLC_DETAIL_ID(+) 
+       --AND PIV.BBLC_NO=details_ai.BBLC_NO(+)
+       AND HRU.ORGANIZATION_ID = PL.ORG_ID
+
+=============================================================================== 2.12.16 ================================================================
+
+
+CREATE OR REPLACE VIEW PI_BBLC_V
+(PROPOSAL_NUMBER, BBLC_CONTRACT_NO, EXPORT_LC_NO, BBLC_NO,BBLC_VALUE, BBLC_TYPE, AMMENDMENT_VALUE ,
+ PI_NO, PI_VALUE)
+AS 
+SELECT H.PROPOSAL_NUMBER, C.BBLC_CONTRACT_NO, C.EXPORT_LC_NO, L.BBLC_NO , L.TOTAL_BBLC_VALUE ,
+       L.BBLC_TYPE, L.ATTRIBUTE15 , D.PI_NO, D.PI_VALUE
+  FROM IEDOC_IMP_BBLC_HEADERS H,
+       IEDOC_IMP_BBLC_LINES L,
+       IEDOC_IMP_BBLC_PI_DETAILS D,
+       IEDOC_IMP_BBLC_CONTRACTS C 
+      -- IEDOC_IMP_PI_LINES PL 
+      -- IEDOC_IMP_PI_DETAILS PD
+    
+ WHERE H.IMP_BBLC_HEADER_ID = L.IMP_BBLC_HEADER_ID
+   AND L.IMP_BBLC_LINE_ID = D.IMP_BBLC_LINE_ID
+   AND C.IMP_BBLC_HEADER_ID = H.IMP_BBLC_HEADER_ID 
+
+
+
+
+
+
+
+
+============================================================================== 21.11.16 ==================================================================
+
+
+SELECT DISTINCT PIV.*, ASUP.VENDOR_NAME, PL.SUPPLIER_ID, PL.ORG_ID, HRU.INTERNAL_ADDRESS_LINE, PD.PO_NO AS SPO_NO, PD.ATTRIBUTE1 AS USANCE,
+       PD.ATTRIBUTE2 AS SHIP_MODE, PD.ATTRIBUTE3 AS BUYER_NAME, PD.ATTRIBUTE4 AS SEASON, PD.ATTRIBUTE5 AS STYLE_NAME ,
+       PD.ATTRIBUTE6 AS STYLE_NO,
+       details.INVOICE_NO,
+       details.SHIPMENT_NUMBER ,
+       details_ai.BILL_REFERENCE_NO,
+       details_ai.BILL_VALUE,
+       details_ai.MATURITY_DATE  
+    FROM IEDOC_IMP_PI_LINES PL,
+       IEDOC_IMP_PI_DETAILS PD,
+       PI_BBLC_V PIV,
+       AP_SUPPLIERS ASUP,
+        IEDOC_IMP_BBLC_LINES lines,
+       IEDOC_IMP_BBLC_DETAILS details,
+       IEDOC_IMP_BBLC_SUB_DET_AI details_ai,
+       HR_ORGANIZATION_UNITS HRU
+    WHERE PL.IMP_PI_LINE_ID = PD.IMP_PI_LINE_ID
+       AND PIV.PI_NO = PL.PI_NO
+       AND ASUP.VENDOR_ID = PL.SUPPLIER_ID
+       AND lines.IMP_BBLC_LINE_ID = details.IMP_BBLC_LINE_ID
+       AND PIV.BBLC_NO= lines.BBLC_NO(+)  
+       AND details.IMP_BBLC_DETAIL_ID = details_ai.IMP_BBLC_DETAIL_ID(+) 
+       --AND PIV.BBLC_NO=details_ai.BBLC_NO(+)
+       AND HRU.ORGANIZATION_ID = PL.ORG_ID  
+
+
+
+==================================================================================== 21.11.16================================================================
+
+
+CREATE OR REPLACE VIEW PI_BBLC_V
+(PROPOSAL_NUMBER, BBLC_CONTRACT_NO, EXPORT_LC_NO, BBLC_NO, BBLC_TYPE, AMMENDMENT_VALUE ,
+ PI_NO, PI_VALUE)
+AS 
+SELECT H.PROPOSAL_NUMBER, C.BBLC_CONTRACT_NO, C.EXPORT_LC_NO, L.BBLC_NO,
+       L.BBLC_TYPE, L.ATTRIBUTE15 , D.PI_NO, D.PI_VALUE
+  FROM IEDOC_IMP_BBLC_HEADERS H,
+       IEDOC_IMP_BBLC_LINES L,
+       IEDOC_IMP_BBLC_PI_DETAILS D,
+       IEDOC_IMP_BBLC_CONTRACTS C 
+      -- IEDOC_IMP_PI_LINES PL 
+      -- IEDOC_IMP_PI_DETAILS PD
+    
+ WHERE H.IMP_BBLC_HEADER_ID = L.IMP_BBLC_HEADER_ID
+   AND L.IMP_BBLC_LINE_ID = D.IMP_BBLC_LINE_ID
+   AND C.IMP_BBLC_HEADER_ID = H.IMP_BBLC_HEADER_ID 
+
+
+
+
+
+\=====================================================================================17.11.16=================================================================
+
+
+
+
+
+  SELECT DISTINCT PIV.*, ASUP.VENDOR_NAME, PL.SUPPLIER_ID, PL.ORG_ID, HRU.INTERNAL_ADDRESS_LINE, PD.PO_NO AS SPO_NO, PD.ATTRIBUTE1 AS USANCE,
+       PD.ATTRIBUTE2 AS SHIP_MODE, PD.ATTRIBUTE3 AS BUYER_NAME, PD.ATTRIBUTE4 AS SEASON, PD.ATTRIBUTE5 AS STYLE_NAME ,
+       PD.ATTRIBUTE6 AS STYLE_NO,
+       details.INVOICE_NO,
+       details.SHIPMENT_NUMBER ,
+       details_ai.BILL_REFERENCE_NO,
+       details_ai.BILL_VALUE,
+       details_ai.MATURITY_DATE  
+    FROM IEDOC_IMP_PI_LINES PL,
+       IEDOC_IMP_PI_DETAILS PD,
+       PI_BBLC_V PIV,
+       AP_SUPPLIERS ASUP,
+       IEDOC_IMP_BBLC_DETAILS details,
+       IEDOC_IMP_BBLC_SUB_DET_AI details_ai,
+       HR_ORGANIZATION_UNITS HRU
+    WHERE PL.IMP_PI_LINE_ID = PD.IMP_PI_LINE_ID
+       AND PIV.PI_NO = PL.PI_NO
+       AND ASUP.VENDOR_ID = PL.SUPPLIER_ID
+       AND PIV.BBLC_NO= details.BBLC_NO(+)  
+       AND details.IMP_BBLC_DETAIL_ID = details_ai.IMP_BBLC_DETAIL_ID(+) 
+       --AND PIV.BBLC_NO=details_ai.BBLC_NO(+)
+       AND HRU.ORGANIZATION_ID = PL.ORG_ID  
+
+
+
+
+
+
+================================================================================= 17.11.16 =============================================================
+
+
+CREATE OR REPLACE VIEW PI_BBLC_V1
+(PROPOSAL_NUMBER, BBLC_CONTRACT_NO, EXPORT_LC_NO, BBLC_NO, BBLC_TYPE, 
+ PI_NO, PI_VALUE)
+AS 
+SELECT H.PROPOSAL_NUMBER, C.BBLC_CONTRACT_NO, C.EXPORT_LC_NO, L.BBLC_NO,
+       L.BBLC_TYPE, D.PI_NO, D.PI_VALUE--,PL.SUPPLIER_ID,PL.ORG_ID
+  FROM IEDOC_IMP_BBLC_HEADERS H,
+       IEDOC_IMP_BBLC_LINES L,
+       IEDOC_IMP_BBLC_PI_DETAILS D,
+       IEDOC_IMP_BBLC_CONTRACTS C 
+      -- IEDOC_IMP_PI_LINES PL 
+      -- IEDOC_IMP_PI_DETAILS PD
+    
+ WHERE H.IMP_BBLC_HEADER_ID = L.IMP_BBLC_HEADER_ID
+   AND L.IMP_BBLC_LINE_ID = D.IMP_BBLC_LINE_ID
+   AND C.IMP_BBLC_HEADER_ID = H.IMP_BBLC_HEADER_ID 
+/ 
+
+
+
+
+
+
+
+
+
+
+

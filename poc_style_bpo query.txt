@@ -1,0 +1,232 @@
+==========================================================================8.12.16================================================================
+
+
+(select distinct h.HEADER_NO as POC_NO,
+                (select CUSTOMER_NAME from AR_CUSTOMERS AC  where AC.CUSTOMER_ID=h.BUYER_ID) AS BUYER_NAME ,
+                h.BRAND, h.STYLE_NAME_NEW as STYLE_NAME , h.STYLE_NO , h.SEASON,h.FIT , h.END_USER,h.DROP_PERIOD , h.ORDER_QTY, 
+                h.COSTING_MOU , h.PRODUCTION_UNIT ,h.ITEM_DESCRIPTION,
+                l.FABRIC_DESC ,l.FOB,
+                l.BPO_NO , l.BPO_QTY , l.PO_TYPE ,l.CLASFIC,
+              a.CUST_PO_NUMBER , b.ORDERED_QUANTITY , c.DELIVERY_DATE , (select count (SO_OBINSLINE_ID) from CUST_MNJ_ONT_SO_OBINSLINE where SO_OBINSLINE_ID = c.SO_OBINSLINE_ID ) AS SIZE_BREAKDOWN ,
+                 h.VERSION_NO
+           from MNJ_MFG_PRECOSTING_H h ,
+            MNJ_MFG_PRECOSTING_L l,
+           OE_ORDER_HEADERS_ALL a ,
+           OE_ORDER_LINES_ALL b ,  
+          CUST_MNJ_ONT_SO_OBIN_SIZLINE c 
+          
+        
+            where  h.HEADER_ID = l.HEADER_ID
+            and h.HEADER_NO = l.HEADER_NUMBER    -- to eliminate more than one poc number against one header id
+            and  h.VERSION_NO=(   select Max(VERSION_NO)
+                                  from MNJ_MFG_PRECOSTING_H h2 
+                                  where h.HEADER_NO = h2.HEADER_NO
+                                  Group by h2.HEADER_NO
+                              )
+                              
+            and  l.BPO_NO = a.CUST_PO_NUMBER  
+            and  l.BPO_QTY = b.ORDERED_QUANTITY               
+            and a.HEADER_ID =   b.HEADER_ID (+)
+            and  a.HEADER_ID = c.SALES_ORDER_ID (+)
+            --  and  c.SO_OBINSLINE_ID = d.SO_OBINSLINE_ID  
+            )
+            union
+            
+            (select distinct h.HEADER_NO as POC_NO,
+                (select CUSTOMER_NAME from AR_CUSTOMERS AC  where AC.CUSTOMER_ID=h.BUYER_ID) AS BUYER_NAME ,
+                h.BRAND, h.STYLE_NAME_NEW as STYLE_NAME , h.STYLE_NO , h.SEASON,h.FIT , h.END_USER,h.DROP_PERIOD , h.ORDER_QTY, 
+                h.COSTING_MOU , h.PRODUCTION_UNIT ,h.ITEM_DESCRIPTION,
+                l.FABRIC_DESC ,l.FOB,
+                l.BPO_NO , l.BPO_QTY , l.PO_TYPE ,l.CLASSFIC as CLASFIC,
+              a.CUST_PO_NUMBER , b.ORDERED_QUANTITY , c.DELIVERY_DATE , (select count (SO_OBINSLINE_ID) from CUST_MNJ_ONT_SO_OBINSLINE where SO_OBINSLINE_ID = c.SO_OBINSLINE_ID ) AS SIZE_BREAKDOWN ,
+                 h.VERSION_NO
+           from MNJ_MFG_PRECOSTING_H h ,
+            MNJ_PRECOST_CREATE_BPO_D l,
+           OE_ORDER_HEADERS_ALL a ,
+           OE_ORDER_LINES_ALL b ,  
+          CUST_MNJ_ONT_SO_OBIN_SIZLINE c 
+          
+        
+            where  h.HEADER_ID = l.HEADER_ID
+          --  and h.HEADER_NO = l.HEADER_NUMBER    -- to eliminate more than one poc number against one header id
+            and  h.VERSION_NO=(   select Max(VERSION_NO)
+                                  from MNJ_MFG_PRECOSTING_H h2 
+                                  where h.HEADER_NO = h2.HEADER_NO
+                                  Group by h2.HEADER_NO
+                              )
+                              
+            and  l.BPO_NO = a.CUST_PO_NUMBER  
+            and  l.BPO_QTY = b.ORDERED_QUANTITY               
+            and a.HEADER_ID =   b.HEADER_ID (+)
+            and  a.HEADER_ID = c.SALES_ORDER_ID (+)
+            --  and  c.SO_OBINSLINE_ID = d.SO_OBINSLINE_ID  
+           )
+               
+
+
+===========================================================================6.12.16==============================================================================
+
+
+
+(select distinct h.HEADER_NO as POC_NO,
+                (select CUSTOMER_NAME from AR_CUSTOMERS AC  where AC.CUSTOMER_ID=h.BUYER_ID) AS BUYER_NAME ,
+                h.BRAND, h.STYLE_NAME_NEW as STYLE_NAME , h.STYLE_NO , h.SEASON,h.FIT , h.END_USER,h.DROP_PERIOD , h.ORDER_QTY, 
+                h.COSTING_MOU , h.PRODUCTION_UNIT ,h.ITEM_DESCRIPTION,
+                l.FABRIC_DESC ,l.FOB,
+                l.BPO_NO , l.BPO_QTY , l.PO_TYPE ,l.CLASFIC,
+              a.CUST_PO_NUMBER , b.ORDERED_QUANTITY , c.DELIVERY_DATE , (select count (SO_OBINSLINE_ID) from CUST_MNJ_ONT_SO_OBINSLINE where SO_OBINSLINE_ID = c.SO_OBINSLINE_ID ) AS SIZE_BREAKDOWN ,
+                 h.VERSION_NO
+           from MNJ_MFG_PRECOSTING_H h ,
+            MNJ_MFG_PRECOSTING_L l,
+           OE_ORDER_HEADERS_ALL a ,
+           OE_ORDER_LINES_ALL b ,  
+          CUST_MNJ_ONT_SO_OBIN_SIZLINE c 
+          
+        
+            where  h.HEADER_ID = l.HEADER_ID
+            and h.HEADER_NO = l.HEADER_NUMBER    -- to eliminate more than one poc number against one header id
+            and  h.VERSION_NO=(   select Max(VERSION_NO)
+                                  from MNJ_MFG_PRECOSTING_H h2 
+                                  where h.HEADER_NO = h2.HEADER_NO
+                                  Group by h2.HEADER_NO
+                              )
+                              
+            and  l.BPO_NO = a.CUST_PO_NUMBER  
+            and  l.BPO_QTY = b.ORDERED_QUANTITY               
+            and a.HEADER_ID =   b.HEADER_ID (+)
+            and  a.HEADER_ID = c.SALES_ORDER_ID (+)
+            --  and  c.SO_OBINSLINE_ID = d.SO_OBINSLINE_ID  
+            )
+            
+            
+            
+            
+            union
+            
+            
+            
+            (select distinct h.HEADER_NO as POC_NO,
+                (select CUSTOMER_NAME from AR_CUSTOMERS AC  where AC.CUSTOMER_ID=h.BUYER_ID) AS BUYER_NAME ,
+                h.BRAND, h.STYLE_NAME_NEW as STYLE_NAME , h.STYLE_NO , h.SEASON,h.FIT , h.END_USER,h.DROP_PERIOD , h.ORDER_QTY, 
+                h.COSTING_MOU , h.PRODUCTION_UNIT ,h.ITEM_DESCRIPTION,
+                l.FABRIC_DESC ,l.FOB,
+                l.BPO_NO , l.BPO_QTY , l.PO_TYPE ,l.CLASSFIC as CLASFIC,
+              a.CUST_PO_NUMBER , b.ORDERED_QUANTITY , c.DELIVERY_DATE , (select count (SO_OBINSLINE_ID) from CUST_MNJ_ONT_SO_OBINSLINE where SO_OBINSLINE_ID = c.SO_OBINSLINE_ID ) AS SIZE_BREAKDOWN ,
+                 h.VERSION_NO
+           from MNJ_MFG_PRECOSTING_H h ,
+            MNJ_PRECOST_CREATE_BPO_D l,
+           OE_ORDER_HEADERS_ALL a ,
+           OE_ORDER_LINES_ALL b ,  
+          CUST_MNJ_ONT_SO_OBIN_SIZLINE c 
+          
+        
+            where  h.HEADER_ID = l.HEADER_ID
+          --  and h.HEADER_NO = l.HEADER_NUMBER    -- to eliminate more than one poc number against one header id
+            and  h.VERSION_NO=(   select Max(VERSION_NO)
+                                  from MNJ_MFG_PRECOSTING_H h2 
+                                  where h.HEADER_NO = h2.HEADER_NO
+                                  Group by h2.HEADER_NO
+                              )
+                              
+            and  l.BPO_NO = a.CUST_PO_NUMBER  
+            and  l.BPO_QTY = b.ORDERED_QUANTITY               
+            and a.HEADER_ID =   b.HEADER_ID (+)
+            and  a.HEADER_ID = c.SALES_ORDER_ID (+)
+            --  and  c.SO_OBINSLINE_ID = d.SO_OBINSLINE_ID  
+           )
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======================================================================================5.12.16========================================================================
+
+select distinct h.HEADER_NO as POC_NO,
+                (select CUSTOMER_NAME from AR_CUSTOMERS AC  where AC.CUSTOMER_ID=h.BUYER_ID) AS BUYER_NAME ,
+                h.BRAND, h.STYLE_NAME_NEW as STYLE_NAME , h.STYLE_NO , h.SEASON,h.FIT , h.END_USER,h.DROP_PERIOD , h.ORDER_QTY, 
+                h.COSTING_MOU , h.PRODUCTION_UNIT ,h.ITEM_DESCRIPTION,
+                l.FABRIC_DESC ,l.FOB,
+                l.BPO_NO , l.BPO_QTY , l.PO_TYPE ,l.CLASFIC,
+              a.CUST_PO_NUMBER , b.ORDERED_QUANTITY , c.DELIVERY_DATE , (select count (SO_OBINSLINE_ID) from CUST_MNJ_ONT_SO_OBINSLINE where SO_OBINSLINE_ID = c.SO_OBINSLINE_ID ) AS SIZE_BREAKDOWN ,
+                 h.VERSION_NO
+           from MNJ_MFG_PRECOSTING_H h ,
+            MNJ_MFG_PRECOSTING_L l,
+           OE_ORDER_HEADERS_ALL a ,
+           OE_ORDER_LINES_ALL b ,  
+          CUST_MNJ_ONT_SO_OBIN_SIZLINE c 
+          
+        
+            where  h.HEADER_ID = l.HEADER_ID
+            and h.HEADER_NO = l.HEADER_NUMBER    -- to eliminate more than one poc number against one header id
+            and  h.VERSION_NO=(   select Max(VERSION_NO)
+                                  from MNJ_MFG_PRECOSTING_H h2 
+                                  where h.HEADER_NO = h2.HEADER_NO
+                                  Group by h2.HEADER_NO
+                              )
+                              
+            and  l.BPO_NO = a.CUST_PO_NUMBER  
+            and  l.BPO_QTY = b.ORDERED_QUANTITY               
+            and a.HEADER_ID =   b.HEADER_ID (+)
+            and  a.HEADER_ID = c.SALES_ORDER_ID (+)
+            --  and  c.SO_OBINSLINE_ID = d.SO_OBINSLINE_ID  
+            order by POC_N
+
+
+
+
+
+=============================================================================upsated 13.11.2016===================================================================
+
+
+
+
+select distinct h.HEADER_NO as POC_NO,h.POC_TYPE , h.BRAND,h.STYLE_NAME , h.STYLE_NAME_NEW , h.STYLE_NO , h.SEASON,h.FIT , h.END_USER,h.DROP_PERIOD , h.ORDER_QTY,
+                h.CM_MERCHANDISER ,   h.COSTING_MOU , h.PRODUCTION_UNIT ,h.ITEM_DESCRIPTION,
+                l.FABRIC_DESC ,l.FOB,
+                l.BPO_NO , l.BPO_QTY , l.PO_TYPE  
+        
+        from MNJ_MFG_PRECOSTING_H h , MNJ_MFG_PRECOSTING_L l
+        
+            where  h.HEADER_ID = l.HEADER_ID
+           and  h.HEADER_NO = l.HEADER_NUMBER
+
+
+
+
+
+
+
+updated 14.11.16
+
+
+
+select distinct h.VERSION_NO, h.HEADER_NO as POC_NO,h.POC_TYPE , h.BRAND,h.STYLE_NAME , h.STYLE_NAME_NEW , h.STYLE_NO , h.SEASON,h.FIT , h.END_USER,h.DROP_PERIOD , h.ORDER_QTY,
+                h.CM_MERCHANDISER ,   h.COSTING_MOU , h.PRODUCTION_UNIT ,h.ITEM_DESCRIPTION,
+                l.FABRIC_DESC ,l.FOB,
+                l.BPO_NO , l.BPO_QTY , l.PO_TYPE  
+        
+        from MNJ_MFG_PRECOSTING_H h , MNJ_MFG_PRECOSTING_L l
+        
+            where  h.HEADER_ID = l.HEADER_ID
+           and  h.HEADER_NO = l.HEADER_NUMBER
+           and  h.VERSION_NO=(   select Max(VERSION_NO)
+                                  from MNJ_MFG_PRECOSTING_H h2 
+                                  where h.HEADER_NO = h2.HEADER_NO
+                                  Group by h2.HEADER_NO
+                              )
+           
+            order by POC_NO 
