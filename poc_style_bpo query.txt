@@ -2,6 +2,7 @@
 ttttttttttttt
 gvvvvggvgvgg
 
+dddddddddddddddddddddd
 (select distinct h.HEADER_NO as POC_NO,
                 (select CUSTOMER_NAME from AR_CUSTOMERS AC  where AC.CUSTOMER_ID=h.BUYER_ID) AS BUYER_NAME ,
                 h.BRAND, h.STYLE_NAME_NEW as STYLE_NAME , h.STYLE_NO , h.SEASON,h.FIT , h.END_USER,h.DROP_PERIOD , h.ORDER_QTY, 
