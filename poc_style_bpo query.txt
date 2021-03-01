@@ -101,7 +101,7 @@
             
             
             
-            union
+            union all
             
             
             
