@@ -1,7 +1,8 @@
 
 
 ===============================================================================2.12.16=======================================================================
-
+ttttttttttttt
+gvvvvggvgvgg
 
 SELECT DISTINCT PIV.*, ASUP.VENDOR_NAME, PL.SUPPLIER_ID, PL.ORG_ID, HRU.INTERNAL_ADDRESS_LINE, PD.PO_NO AS SPO_NO, PD.ATTRIBUTE1 AS USANCE,
        PD.ATTRIBUTE2 AS SHIP_MODE, PD.ATTRIBUTE3 AS BUYER_NAME, PD.ATTRIBUTE4 AS SEASON, PD.ATTRIBUTE5 AS STYLE_NAME ,

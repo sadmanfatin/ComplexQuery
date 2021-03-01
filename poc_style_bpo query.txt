@@ -1,5 +1,6 @@
 ==========================================================================8.12.16================================================================
-
+ttttttttttttt
+gvvvvggvgvgg
 
 (select distinct h.HEADER_NO as POC_NO,
                 (select CUSTOMER_NAME from AR_CUSTOMERS AC  where AC.CUSTOMER_ID=h.BUYER_ID) AS BUYER_NAME ,

@@ -1,3 +1,7 @@
+ttttttttttttt
+gvvvvggvgvgg
+
+
 --select * from OE_ORDER_LINES_ALL where header_id=2009;
  
 select * from OE_ORDER_HEADERS_ALL  where header_id='2009' ; --Standard header  order Qty
